@@ -1,4 +1,4 @@
-# Week 8: Migrating Your Interactive Portfolio to Vite + React
+# Week 7: Migrating Your Interactive Portfolio to Vite + React
 ## From Vanilla JavaScript to React - The First Step
 
 ### Learning Objectives
@@ -12,23 +12,23 @@ By completing this project, you will:
 
 ### Prerequisites
 Before starting, you should have:
-- Completed Week 8 lecture on React Introduction
+- Completed Week 7 lecture on React Introduction
 - Reviewed prep work chapters: React Front To Back Chapters 1-2 (Intro & JSX)
-- Your code from Week 7 Interactive Portfolio project (highly recommended)
+- Your code from Week 6 Interactive Portfolio project (highly recommended)
 - Basic understanding of npm and command line tools
 
 ### Project Overview
-This week, you'll take your interactive portfolio from Week 7 and migrate it into a React application using Vite. Rather than breaking it into multiple 1components (that comes in Week 9), you'll wrap ALL your HTML in ONE giant App.jsx component and move ALL your JavaScript logic inside that component. This monolithic approach helps you understand how React works before learning component decomposition.
+This week, you'll take your interactive portfolio from Week 6 and migrate it into a React application using Vite. Rather than breaking it into multiple 1components (that comes in Week 8), you'll wrap ALL your HTML in ONE giant App.jsx component and move ALL your JavaScript logic inside that component. This monolithic approach helps you understand how React works before learning component decomposition.
 
 **What you're migrating:**
-- Week 7 Interactive Portfolio with smooth scroll navigation, project filtering, form validation, mobile menu, and skill animations
+- Week 6 Interactive Portfolio with smooth scroll navigation, project filtering, form validation, mobile menu, and skill animations
 - All HTML becomes JSX in a single App component
 - All JavaScript event listeners become React event handlers
 - All CSS imports as a module in React
 
 ### Getting Started
 
-**First:** Accept the GitHub Classroom assignment link provided by your instructor. This will create a new repository with the Week 8 starter code.
+**First:** Accept the GitHub Classroom assignment link provided by your instructor. This will create a new repository with the Week 7 starter code.
 
 1. **Clone your new repository:**
    ```bash
@@ -38,12 +38,12 @@ This week, you'll take your interactive portfolio from Week 7 and migrate it int
 
 2. **Choose your path:**
 
-#### Option A: Continue from Week 7 (Recommended)
-If you completed the Week 7 project and want to migrate your own code:
+#### Option A: Continue from Week 6 (Recommended)
+If you completed the Week 6 project and want to migrate your own code:
 
 1. **Keep the starter files** - Don't delete them! You'll need `package.json` and `vite.config.js`
-2. **Keep your Week 7 files nearby** - Open them in a separate window or tab
-3. **Follow the migration steps** in Part 2 below to move your Week 7 code into the React structure
+2. **Keep your Week 6 files nearby** - Open them in a separate window or tab
+3. **Follow the migration steps** in Part 2 below to move your Week 6 code into the React structure
 
 #### Option B: Fresh Start
 If starting fresh, use the provided starter files:
@@ -71,17 +71,17 @@ Vite (French for "fast") is a modern build tool that provides a faster developme
 
 **Explore the starter structure:**
 ```
-week8-starter/
+week7-starter/
 ├── index.html          # Entry point (minimal, just loads main.jsx)
 ├── package.json        # Dependencies and scripts
 ├── vite.config.js      # Vite configuration
 ├── src/
 │   ├── main.jsx        # React initialization (ReactDOM.render)
 │   ├── App.jsx         # Your main component (currently empty)
-│   └── App.css         # Your styles (Week 7 styles.css will go here)
+│   └── App.css         # Your styles (Week 6 styles.css will go here)
 ```
 
-**Key differences from Week 7:**
+**Key differences from Week 6:**
 - **index.html**: Much simpler! Just loads the JavaScript
 - **main.jsx**: Initializes React and mounts App component to the DOM
 - **App.jsx**: Where ALL your HTML and JavaScript will live (for now)
@@ -106,9 +106,9 @@ What's happening here:
 4. Comments use `{/* comment */}` syntax
 5. One root element (use fragments `<>...</>` if needed)
 
-**Step 1: Copy your Week 7 HTML structure**
+**Step 1: Copy your Week 6 HTML structure**
 
-Open your Week 7 `index.html` and copy everything INSIDE the `<body>` tag (but not the `<body>` tag itself).
+Open your Week 6 `index.html` and copy everything INSIDE the `<body>` tag (but not the `<body>` tag itself).
 
 Paste it into `App.jsx` inside the return statement:
 
@@ -116,7 +116,7 @@ Paste it into `App.jsx` inside the return statement:
 function App() {
   return (
     <>
-      {/* Paste your Week 7 HTML here */}
+      {/* Paste your Week 6 HTML here */}
     </>
   )
 }
@@ -137,7 +137,7 @@ Look for tags without closing tags and add ` />`:
 
 If you have any inline styles (like in skill progress bars), convert them:
 
-Week 7 HTML:
+Week 6 HTML:
 ```html
 <div class="skill-progress" style="--skill-level: 90%"></div>
 ```
@@ -160,13 +160,13 @@ Common mistakes to avoid:
 
 #### Part 3: Importing and Using CSS (10 minutes)
 
-**Step 1: Copy your Week 7 CSS**
+**Step 1: Copy your Week 6 CSS**
 
-Copy the entire contents of your Week 7 `styles.css` file.
+Copy the entire contents of your Week 6 `styles.css` file.
 
 **Step 2: Paste into App.css**
 
-Open `src/App.css` and replace everything with your Week 7 CSS.
+Open `src/App.css` and replace everything with your Week 6 CSS.
 
 **Step 3: Import CSS in App.jsx**
 
@@ -184,7 +184,7 @@ Save and your portfolio should now be styled! If something looks off:
 
 #### Part 4: Migrating JavaScript Logic (25 minutes)
 
-This is where it gets interesting! You'll move ALL your Week 7 JavaScript into the App component.
+This is where it gets interesting! You'll move ALL your Week 6 JavaScript into the App component.
 
 **Understanding React's approach:**
 - Vanilla JS: Select elements, attach event listeners
@@ -196,7 +196,7 @@ In your JSX, remove any `<script>` tags - we'll handle this in React.
 
 **Step 2: Convert navigation smooth scroll**
 
-Week 7 JavaScript:
+Week 6 JavaScript:
 ```javascript
 const navLinks = document.querySelectorAll('.nav-link');
 navLinks.forEach(link => {
@@ -242,7 +242,7 @@ Key differences:
 
 **Step 3: Convert project filtering**
 
-Week 7 JavaScript:
+Week 6 JavaScript:
 ```javascript
 const filterButtons = document.querySelectorAll('.filter-btn');
 filterButtons.forEach(button => {
@@ -301,11 +301,11 @@ function App() {
 }
 ```
 
-Note: Yes, we're still using DOM manipulation here! In Week 9, you'll learn to do this the "React way" with state.
+Note: Yes, we're still using DOM manipulation here! In Week 8, you'll learn to do this the "React way" with state.
 
 **Step 4: Convert form validation**
 
-Week 7 JavaScript:
+Week 6 JavaScript:
 ```javascript
 const contactForm = document.querySelector('#contact-form');
 contactForm.addEventListener('submit', (e) => {
@@ -336,7 +336,7 @@ function App() {
       isValid = false;
     }
 
-    // etc - all your Week 7 validation logic
+    // etc - all your Week 6 validation logic
 
     if (isValid) {
       console.log('Form submitted!');
@@ -445,7 +445,7 @@ function App() {
 What's happening here:
 - All event handler functions are defined inside the App component
 - They have access to each other and can be used throughout the JSX
-- We're still using DOM manipulation (document.querySelector) - this is OK for Week 8!
+- We're still using DOM manipulation (document.querySelector) - this is OK for Week 7!
 - Next week, you'll learn the React way using state and props
 
 Common mistakes to avoid:
@@ -482,9 +482,9 @@ Open browser DevTools (F12) and look for:
 | Events don't work | Wrong event syntax | Use `onClick` not `onclick`, pass function reference not call |
 | Form doesn't prevent default | Missing preventDefault | Add `e.preventDefault()` in form handler |
 
-**Step 4: Compare with Week 7**
+**Step 4: Compare with Week 6**
 
-Open your Week 7 portfolio in another tab and compare:
+Open your Week 6 portfolio in another tab and compare:
 - Does the layout look the same?
 - Do all interactions work identically?
 - Are animations smooth?
@@ -499,18 +499,18 @@ Great question! Here's why:
 1. **Learning progression**: Understanding how React handles events before learning component decomposition
 2. **Migration strategy**: Easier to migrate everything first, then refactor
 3. **Seeing the differences**: Clearly see what's different from vanilla JS
-4. **Preparation for Week 9**: Next week you'll break this apart into logical components
+4. **Preparation for Week 8**: Next week you'll break this apart into logical components
 
-**What makes this different from Week 7?**
+**What makes this different from Week 6?**
 
 Even though we're still using some DOM manipulation:
 - We're using JSX instead of HTML
 - We're using React's event system
 - We're importing CSS as a module
 - We're using a React development server with HMR
-- We're setting up for proper React patterns (coming in Week 9)
+- We're setting up for proper React patterns (coming in Week 8)
 
-**Preview of Week 9:**
+**Preview of Week 8:**
 
 Next week, you'll learn to:
 - Break App.jsx into multiple components (Navbar, Hero, Skills, Projects, Contact, Footer)
@@ -618,14 +618,13 @@ import React from 'react'
 - [React Documentation](https://react.dev/)
 - [JSX Introduction](https://react.dev/learn/writing-markup-with-jsx)
 
-**Week 8 Prep Work:**
+**Week 7 Prep Work:**
 - React Front To Back Chapter 1 - Introduction
 - React Front To Back Chapter 2 - React Basics and JSX
 
 **Related Week Projects:**
-- Week 5: Static Portfolio (HTML/CSS foundation)
-- Week 7: Interactive Portfolio (JavaScript functionality you're migrating)
-- Week 9: Component-Based Portfolio (where you'll decompose this monolith)
+- Week 6: Interactive Portfolio (JavaScript functionality you're migrating)
+- Week 8: Component-Based Portfolio (where you'll decompose this monolith)
 
 **Tools:**
 - [React Developer Tools](https://react.dev/learn/react-developer-tools) - Browser extension
@@ -649,8 +648,8 @@ Before submitting, ensure you have:
 
 **CSS Import:**
 - [ ] `import './App.css'` at top of App.jsx
-- [ ] All styles from Week 7 present and working
-- [ ] Page looks identical to Week 7 portfolio
+- [ ] All styles from Week 6 present and working
+- [ ] Page looks identical to Week 6 portfolio
 
 **JavaScript Migration:**
 - [ ] Smooth scroll navigation works on nav link clicks
@@ -669,7 +668,7 @@ Before submitting, ensure you have:
 - [ ] Code is readable with proper indentation
 
 **Functionality:**
-- [ ] All Week 7 features work identically
+- [ ] All Week 6 features work identically
 - [ ] No broken links or images
 - [ ] Responsive design works on mobile
 - [ ] All animations smooth and performant
@@ -699,8 +698,8 @@ After completing the project, consider:
    - What would you want to break into separate components?
    - How might you organize it differently?
 
-Keep these thoughts in mind for Week 9 when you'll learn component decomposition!
+Keep these thoughts in mind for Week 8 when you'll learn component decomposition!
 
 ---
 
-**Congratulations!** You've successfully migrated your portfolio to React. This is a huge step toward modern web development. In Week 9, you'll learn to organize this code into clean, reusable components. But for now, celebrate turning your vanilla JavaScript portfolio into a React application!
+**Congratulations!** You've successfully migrated your portfolio to React. This is a huge step toward modern web development. In Week 8, you'll learn to organize this code into clean, reusable components. But for now, celebrate turning your vanilla JavaScript portfolio into a React application!
