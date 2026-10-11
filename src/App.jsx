@@ -1,5 +1,5 @@
-// Week 8: Migrating Your Interactive Portfolio to React
-// This starter file guides you through migrating your Week 7 vanilla JavaScript portfolio to React
+// Week 7: Migrating Your Interactive Portfolio to React
+// This starter file guides you through migrating your Week 6 vanilla JavaScript portfolio to React
 
 import './App.css'
 
@@ -7,14 +7,14 @@ function App() {
   // ============================================
   // PART 1: EVENT HANDLER FUNCTIONS
   // ============================================
-  // TODO: Move your Week 7 event handler functions here
-  // In Week 7, you had functions like:
+  // TODO: Move your Week 6 event handler functions here
+  // In Week 6, you had functions like:
   // - handleNavClick (for smooth scroll)
   // - filterProjects (for project filtering)
   // - handleFormSubmit (for form validation)
   //
   // HINT: These will be regular JavaScript functions defined inside App component
-  // Example from Week 7:
+  // Example from Week 6:
   //   const filterProjects = (category) => {
   //     // Your filtering logic here
   //   }
@@ -39,7 +39,7 @@ function App() {
   // ============================================
   // PART 2: JSX RETURN STATEMENT
   // ============================================
-  // TODO: Copy your Week 7 HTML structure here
+  // TODO: Copy your Week 6 HTML structure here
   // Remember to convert HTML to JSX:
   // - class → className
   // - onclick → onClick
@@ -49,7 +49,7 @@ function App() {
   //
   // IMPORTANT: Put EVERYTHING in this one return statement!
   // This week we're building a MONOLITHIC component (one big component)
-  // Week 9 will teach you how to break this into smaller pieces
+  // Week 8 will teach you how to break this into smaller pieces
 
   return (
     <div className="portfolio">
