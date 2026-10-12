@@ -79,9 +79,6 @@ If you did not finish Week 6, migrate the class solution instead. It is already 
 
 #### Part 1: Understanding the Vite React Setup (10 minutes)
 
-**What is Vite?**
-Vite (French for "fast") is a modern build tool that provides a faster development experience than Create React App. It uses native ES modules and provides instant hot module replacement.
-
 **Explore the starter structure:**
 ```
 week7-starter/
@@ -95,21 +92,9 @@ week7-starter/
 │   └── index.css       # Base styles loaded by main.jsx; leave it alone
 ```
 
-**Key differences from Week 6:**
-- **index.html**: Much simpler! It only loads the JavaScript
-- **main.jsx**: Creates the React root with `createRoot` and renders the App component into the DOM
-- **App.jsx**: Where ALL your HTML and JavaScript will live (for now)
-- **App.css**: Where your CSS will live
+**Key differences from Week 6:** `index.html` only loads the JavaScript; `main.jsx` renders `<App />` into `<div id="root">`; `App.jsx` is where all your HTML and JavaScript live this week; `App.css` is where your CSS goes.
 
-**Try it out:**
-1. Run `npm run dev` and open the browser
-2. Make a change to `App.jsx` (add some text)
-3. Save and watch it update instantly!
-
-What's happening here:
-- Vite bundles your React code in real-time
-- React renders the App component into the `<div id="root">` in index.html
-- Hot Module Replacement (HMR) updates the page without full reload
+**Try it out:** with `npm run dev` running, add some text to `App.jsx`, save, and watch the browser update without a reload.
 
 **Checkpoint (end of Part 1):** `npm run dev` is running, the browser shows the starter, and a text change in `App.jsx` appears without a manual reload.
 
@@ -172,11 +157,7 @@ Save the file and check the browser. You should see:
 - Your portfolio structure (but no styles yet)
 - Any JSX errors in the console
 
-Common mistakes to avoid:
-- Forgetting to wrap multiple elements in a fragment `<>...</>`
-- Missing closing tags
-- Using `class` instead of `className`, or `for` instead of `htmlFor`
-- Leaving an HTML comment `<!-- -->` or a `<script>` tag in the pasted markup
+If the page is blank, the console names the line; the JSX rules above are the usual cause.
 
 **Checkpoint (end of Part 2):** the page renders your whole portfolio as unstyled text and images, and the browser console shows no red JSX error.
 
@@ -208,33 +189,12 @@ Save and your portfolio should now be styled! If something looks off:
 
 #### Part 4: Migrating JavaScript Logic (25 minutes)
 
-This is where it gets interesting! You'll move ALL your Week 6 JavaScript into the App component.
+Your Week 6 `script.js` selected elements and attached listeners. In React each handler is a function defined inside `App`, and the element names it directly: `onClick={handleNavClick}` instead of `addEventListener`. Each step below shows the handler and the one JSX attribute that uses it; the handler goes above the `return`, the attribute goes on the element already in your JSX.
 
-**Understanding React's approach:**
-- Vanilla JS: Select elements, attach event listeners
-- React: Use event attributes directly on JSX elements
+**Step 1: Smooth scroll navigation**
 
-**Step 1: Remove script tags**
-
-In your JSX, remove any `<script>` tags - we'll handle this in React.
-
-**Step 2: Convert navigation smooth scroll**
-
-Week 6 JavaScript:
-```javascript
-const navLinks = document.querySelectorAll('.nav-link');
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        // smooth scroll logic
-    });
-});
-```
-
-React approach (inside App component):
 ```jsx
 function App() {
-  // Event handler function
   const handleNavClick = (e) => {
     e.preventDefault();
     const targetId = e.currentTarget.getAttribute('href');
@@ -246,37 +206,16 @@ function App() {
 
   return (
     <>
-      <nav id="navbar">
-        <ul className="nav-menu">
-          <li><a href="#home" className="nav-link" onClick={handleNavClick}>Home</a></li>
-          <li><a href="#about" className="nav-link" onClick={handleNavClick}>About</a></li>
-          {/* etc */}
-        </ul>
-      </nav>
-      {/* rest of JSX */}
+      {/* ... */}
+      <li><a href="#home" className="nav-link" onClick={handleNavClick}>Home</a></li>
+      {/* every nav link gets onClick={handleNavClick} */}
     </>
   )
 }
 ```
 
-Key differences:
-- No `querySelectorAll` needed
-- `onClick` attribute directly on the element
-- Event handler is a function in the component
+**Step 2: Project filtering**
 
-**Step 3: Convert project filtering**
-
-Week 6 JavaScript:
-```javascript
-const filterButtons = document.querySelectorAll('.filter-btn');
-filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        // filtering logic
-    });
-});
-```
-
-React approach:
 ```jsx
 function App() {
   const handleFilterClick = (e) => {
@@ -309,36 +248,18 @@ function App() {
 
   return (
     <>
-      {/* navigation */}
-      <div className="filter-buttons">
-        <button className="filter-btn active" data-filter="all" onClick={handleFilterClick}>
-          All Projects
-        </button>
-        <button className="filter-btn" data-filter="frontend" onClick={handleFilterClick}>
-          Frontend
-        </button>
-        {/* etc */}
-      </div>
-      {/* rest of JSX */}
+      {/* ... */}
+      <button className="filter-btn active" data-filter="all" onClick={handleFilterClick}>All Projects</button>
+      {/* every filter button gets onClick={handleFilterClick} */}
     </>
   )
 }
 ```
 
-Note: Yes, we're still using DOM manipulation here! In Week 8, you'll learn to do this the "React way" with state.
+Yes, this still manipulates the DOM. That is fine for this week; Week 8 does it with state.
 
-**Step 4: Convert form validation**
+**Step 3: Form validation**
 
-Week 6 JavaScript:
-```javascript
-const contactForm = document.querySelector('#contact-form');
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    // validation logic
-});
-```
-
-React approach:
 ```jsx
 function App() {
   const handleFormSubmit = (e) => {
@@ -370,24 +291,16 @@ function App() {
 
   return (
     <>
-      {/* navigation and other sections */}
+      {/* ... */}
       <form id="contact-form" className="contact-form" onSubmit={handleFormSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Name *</label>
-          <input type="text" id="name" name="name" required />
-        </div>
-        {/* other form fields */}
-        <button type="submit" className="btn btn-primary">Send Message</button>
+        {/* your Week 6 form fields, with htmlFor on every label */}
       </form>
-      {/* rest of JSX */}
     </>
   )
 }
 ```
 
-Note: `for` attribute becomes `htmlFor` in React!
-
-**Step 5: Add the window scroll listener (copy this block now; `useEffect` is explained on Oct 19)**
+**Step 4: Add the window scroll listener (copy this block now; `useEffect` is explained on Oct 19)**
 
 Active nav highlighting needs a listener on `window`, not on an element. In React you must not call `window.addEventListener` directly in the component body: React runs that body on every render, so each render would add another listener (and StrictMode doubles it in development). The React tool for "do this once when the component loads, and undo it when it goes away" is `useEffect`. Copy the block as written; Week 8 covers what it does.
 
@@ -396,10 +309,7 @@ import { useEffect } from 'react'
 import './App.css'
 
 function App() {
-  // Event handlers
-  const handleNavClick = (e) => { /* ... */ };
-  const handleFilterClick = (e) => { /* ... */ };
-  const handleFormSubmit = (e) => { /* ... */ };
+  // ... your handlers from Steps 1 to 3 ...
 
   // Scroll handler for active nav highlighting
   const handleScroll = () => {
@@ -439,48 +349,30 @@ function App() {
 
 **Skill bars:** in Week 6 the bars animated when you scrolled to the skills section. Today they do not need any JavaScript: the `--skill-level` value you set in Part 2 Step 4 drives the CSS `width` and the fill animation, so leave the Week 6 `animateSkills` code out. (Tier 1 of the Extension Activities turns the skills into data.)
 
-**Step 6: Mobile menu toggle**
+**Step 5: Mobile menu toggle**
 
 ```jsx
 function App() {
   const handleMobileMenuToggle = () => {
-    const navMenu = document.querySelector('.nav-menu');
-    const navToggle = document.querySelector('.nav-toggle');
-    navMenu.classList.toggle('active');
-    navToggle.classList.toggle('active');
+    document.querySelector('.nav-menu').classList.toggle('active');
+    document.querySelector('.nav-toggle').classList.toggle('active');
   };
 
   return (
     <>
-      <nav id="navbar">
-        <div className="nav-brand">
-          <span>Alex Johnson</span>
-        </div>
-        <ul className="nav-menu">
-          {/* nav items */}
-        </ul>
-        <div className="nav-toggle" onClick={handleMobileMenuToggle}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </nav>
-      {/* rest of JSX */}
+      {/* ... */}
+      <div className="nav-toggle" onClick={handleMobileMenuToggle}>
+        <span></span><span></span><span></span>
+      </div>
     </>
   )
 }
 ```
 
-What's happening here:
-- All event handler functions are defined inside the App component
-- They have access to each other and can be used throughout the JSX
-- We're still using DOM manipulation (document.querySelector) - this is OK for Week 7!
-- Next week, you'll learn the React way using state and props
-
 Common mistakes to avoid:
 - Calling the function instead of passing it: `onClick={handleClick()}` (wrong) vs `onClick={handleClick}` (right)
 - Forgetting to use `e.preventDefault()` on form submissions and navigation links
-- Calling `window.addEventListener` in the component body instead of inside the `useEffect` block from Step 5
+- Calling `window.addEventListener` in the component body instead of inside the `useEffect` block from Step 4
 
 **Checkpoint (end of Part 4):** nav links scroll smoothly, the filter buttons show and hide cards, the mobile menu opens and closes at a narrow width, the form refuses an empty name, and the active nav link changes as you scroll.
 
@@ -513,63 +405,7 @@ Open browser DevTools (F12) and look for:
 | Events don't work | Wrong event syntax | Use `onClick` not `onclick`, pass function reference not call |
 | Form doesn't prevent default | Missing preventDefault | Add `e.preventDefault()` in form handler |
 
-**Step 4: Compare with Week 6**
-
-Open your Week 6 portfolio in another tab and compare:
-- Does the layout look the same?
-- Do all interactions work identically?
-- Are animations smooth?
-
 **Checkpoint (end of Part 5):** every box in Step 1 is ticked and the console is clean. Commit and push now (see Submit below), then continue with the Extension Activities.
-
-### Understanding the Monolithic Component Pattern
-
-**Why start with one giant component?**
-
-You might wonder: "Isn't this messy? Why put everything in one component?"
-
-Great question! Here's why:
-1. **Learning progression**: Understanding how React handles events before learning component decomposition
-2. **Migration strategy**: Easier to migrate everything first, then refactor
-3. **Seeing the differences**: Clearly see what's different from vanilla JS
-4. **Preparation for Week 8**: Next week you'll break this apart into logical components
-
-**What makes this different from Week 6?**
-
-Even though we're still using some DOM manipulation:
-- We're using JSX instead of HTML
-- We're using React's event system
-- We're importing CSS as a module
-- We're using a React development server with HMR
-- We're setting up for proper React patterns (coming in Week 8)
-
-**Preview of Week 8:**
-
-Next week, you'll learn to:
-- Break App.jsx into multiple components (Navbar, Hero, Skills, Projects, Contact, Footer)
-- Use props to pass data between components
-- Manage state properly instead of DOM manipulation
-- Create reusable, modular component architecture
-
-### Customization Ideas
-
-Once everything works, try these enhancements:
-
-1. **Update the content**
-   - Change name and title in the hero section
-   - Add your own projects with real images
-   - Update skills to match your experience
-   - Customize colors in CSS variables
-
-2. **Add console logs**
-   - Log when event handlers fire
-   - Log form data before submission
-   - See React's event system in action
-
-3. **Experiment with JSX**
-   - Try adding new sections
-   - Practice conditional rendering with ternary operators
-   - Map over arrays to render lists
 
 ### Extension Activities (requirements and hints only, no code given)
 
@@ -586,7 +422,7 @@ If you finish the five parts early, these are not bonus busywork. They are the s
 #### Tier 2 (about 15 to 20 minutes): for the student who finished Tier 1
 
 **2. Menu open state, the React way**
-- **Goal:** Replace the `classList.toggle` mobile menu from Part 4 Step 6 with one piece of state: `const [menuOpen, setMenuOpen] = useState(false)` and a className that follows it.
+- **Goal:** Replace the `classList.toggle` mobile menu from Part 4 Step 5 with one piece of state: `const [menuOpen, setMenuOpen] = useState(false)` and a className that follows it.
 - **Done when:** the menu opens and closes at a narrow width exactly as before; the toggle handler contains no `document.querySelector`; the `active` class on `.nav-menu` and `.nav-toggle` is written as a ternary in the JSX; smooth scroll and the filter buttons still work.
 - **Ceiling, stop here:** only the menu moves to state. Leave the filter buttons and the form as they are; those come next week.
 - **Hint:** `import { useState } from 'react'` next to `useEffect`. The handler becomes `() => setMenuOpen(!menuOpen)`, and the element reads `className={menuOpen ? 'nav-menu active' : 'nav-menu'}`. You never touch the DOM; you change the value and React changes the class.
@@ -659,24 +495,6 @@ npm run dev
 
 ---
 
-**Problem:** CSS not loading
-
-**Solution:**
-- Check `import './App.css'` is at top of App.jsx
-- Verify App.css is in the src folder
-- Check browser Network tab to see if CSS loaded
-
----
-
-**Problem:** onClick events not firing
-
-**Solution:**
-- Use `onClick` not `onclick` (capital C)
-- Pass function reference: `onClick={handleClick}` not `onClick={handleClick()}`
-- Check console for JavaScript errors
-
----
-
 **Problem:** Smooth scroll not working
 
 **Solution:**
@@ -689,7 +507,7 @@ npm run dev
 **Problem:** The active nav link flickers or scrolling feels slow
 
 **Solution:**
-- You attached the scroll listener in the component body instead of inside the `useEffect` block from Part 4 Step 5, so every render adds another listener. Move it into `useEffect` and reload the page once.
+- You attached the scroll listener in the component body instead of inside the `useEffect` block from Part 4 Step 4, so every render adds another listener. Move it into `useEffect` and reload the page once.
 
 ---
 
@@ -711,10 +529,6 @@ npm run dev
 - React Front To Back Chapter 1 - Introduction
 - React Front To Back Chapter 2 - React Basics and JSX
 
-**Related Week Projects:**
-- Week 6: Interactive Portfolio (JavaScript functionality you're migrating)
-- Week 8: Component-Based Portfolio (where you'll decompose this monolith)
-
 **Tools:**
 - [React Developer Tools](https://react.dev/learn/react-developer-tools) - Browser extension
 - [Vite Guide](https://vitejs.dev/guide/) - Understanding the build tool
@@ -729,77 +543,28 @@ npm run dev
    git push
    ```
 2. On the bCourses assignment page click **Submit Assignment** and paste the URL of your repository (the repository page, not a file) as the Website URL.
-3. Grading is complete/incomplete: a pushed repository that runs with `npm run dev`, shows the styled portfolio, and whose navigation scrolls and filter buttons work (Parts 1 to 4, Steps 2 and 3) earns complete.
+3. Grading is complete/incomplete: a pushed repository that runs with `npm run dev`, shows the styled portfolio, and whose navigation scrolls and filter buttons work (Parts 1 to 4, Steps 1 and 2) earns complete.
 
 ### Project Checklist
 
-Before submitting, ensure you have:
-
-**Setup & Configuration:**
-- [ ] Vite project runs with `npm run dev`
-- [ ] No console errors when page loads
-- [ ] Hot Module Replacement (HMR) works when you save files
-
-**HTML to JSX Conversion:**
-- [ ] All `class` attributes converted to `className`
-- [ ] All self-closing tags have ` />` syntax
-- [ ] No HTML comments (only `{/* JSX comments */}`)
-- [ ] All inline styles converted to object syntax
-
-**CSS Import:**
-- [ ] `import './App.css'` at top of App.jsx
-- [ ] All styles from Week 6 present and working
-- [ ] Page looks identical to Week 6 portfolio
-
-**JavaScript Migration:**
-- [ ] Smooth scroll navigation works on nav link clicks
-- [ ] Active nav link updates based on scroll position (the `useEffect` block from Part 4 Step 5)
-- [ ] Project filter buttons work and show correct projects
-- [ ] Mobile menu toggle opens/closes navigation at a narrow width
-- [ ] Skill bars fill to their `--skill-level` widths
-- [ ] Form validation works on all required fields
-- [ ] Form submission shows the success message (if your Week 6 code had one)
-
-**Code Quality:**
-- [ ] All event handlers defined inside App component
-- [ ] `onClick`, `onSubmit` used instead of addEventListener
-- [ ] `e.preventDefault()` called where needed
-- [ ] No unused code or commented-out blocks
-- [ ] Code is readable with proper indentation
-
-**Functionality:**
-- [ ] All Week 6 features work identically
-- [ ] No broken links or images (placeholder images count as working)
-- [ ] Responsive design works on mobile
-- [ ] Scrolling is smooth (no duplicate scroll listeners)
-
-**Bonus (Optional):**
-- [ ] Added personal customization
-- [ ] Finished Tier 1 of the Extension Activities (skills as data)
-- [ ] Tried Tier 2 or Tier 3
+Before submitting:
+- [ ] `npm run dev` runs and the console is clean on load
+- [ ] Every `class` is `className`, every `for` is `htmlFor`, every tag is closed, no HTML comments
+- [ ] `import './App.css'` is at the top of `App.jsx` and the page looks like your Week 6 portfolio
+- [ ] Nav links scroll smoothly and the active link follows the scroll (the `useEffect` block from Part 4 Step 4)
+- [ ] Filter buttons, mobile menu toggle, skill bar widths and form validation work
+- [ ] All handlers live inside `App`, attached with `onClick` / `onSubmit`, with `e.preventDefault()` where needed
+- [ ] Optional: Tier 1 of the Extension Activities (skills as data), then Tier 2 or 3
 
 ### Reflection Questions
 
-After completing the project, consider:
+1. What surprised you about JSX compared with HTML?
+2. How is `onClick` different from `addEventListener`, and when would you want each?
+3. What does Vite give you that opening `index.html` did not?
+4. What feels messy about one giant component, and where would you cut it?
 
-1. **What surprised you about JSX?**
-   - How is it different from HTML?
-   - What advantages does it provide?
-
-2. **How is React's event system different?**
-   - Compare `addEventListener` vs `onClick`
-   - When would you use each?
-
-3. **Why use a build tool like Vite?**
-   - What does it provide that vanilla JS doesn't?
-   - How does HMR improve development?
-
-4. **What feels messy about the monolithic component?**
-   - What would you want to break into separate components?
-   - How might you organize it differently?
-
-Keep these thoughts in mind for Week 8 when you'll learn component decomposition!
+Keep these in mind for Week 8, when you break this component apart.
 
 ---
 
-**Congratulations!** You've successfully migrated your portfolio to React. This is a huge step toward modern web development. In Week 8, you'll learn to organize this code into clean, reusable components. But for now, celebrate turning your vanilla JavaScript portfolio into a React application!
+Your vanilla JavaScript portfolio now runs as a React application. Week 8 turns it into components.
